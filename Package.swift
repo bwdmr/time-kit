@@ -1,14 +1,45 @@
 // swift-tools-version: 6.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
 import PackageDescription
 
 let package = Package(
-    name: "time-kit",
-    platforms: [ .macOS(.v15) ],
-    products: [ .library( name: "TimeKit", targets: ["TimeKit"]) ],
-    targets: [
-        .target(name: "TimeKit"),
-        .testTarget(name: "TimeKitTests", dependencies: [.target(name: "TimeKit")]),
-    ]
+  name: "time-kit",
+  platforms: [ .macOS(.v15) ],
+  products: [
+    .library( name: "TimeKit", targets: ["TimeKit"] ),
+  ],
+  traits: [
+    .trait(name: "DistributedTracingSupport"),
+    .default(enabledTraits: ["DistributedTracingSupport"] )
+  ],
+  dependencies: [
+    .package(url: "https://github.com/bwdmr/error-kit.git", from: "0.1.3"),
+    .package(url: "https://github.com/apple/swift-distributed-tracing", from: "1.3.1"),
+    .package(url: "https://github.com/apple/swift-service-context", from: "1.2.1")
+  ],
+  targets: [
+    .target(
+      name: "CTimeKit",
+      dependencies: [],
+      publicHeadersPath: "include",
+      cSettings: [ .headerSearchPath(".") ],
+      swiftSettings: [ .interoperabilityMode(.C) ]
+    ),
+    .target(
+      name: "TimeKit",
+      dependencies: [
+        "CTimeKit",
+        .product(name: "ErrorKit", package: "error-kit"),
+        .product(name: "ServiceContextModule", package: "swift-service-context"),
+        .product(name: "Tracing", package: "swift-distributed-tracing", condition: .when(traits: ["DistributedTracingSupport"])),
+      ],
+      swiftSettings: [ .enableUpcomingFeature("StrictConcurrency") ]
+    ),
+    .testTarget(
+      name: "TimeKitTests",
+      dependencies: [
+        "TimeKit",
+        .product(name: "InMemoryTracing", package: "swift-distributed-tracing", condition: .when(traits: ["DistributedTracingSupport"])),
+      ]
+    ),
+  ]
 )

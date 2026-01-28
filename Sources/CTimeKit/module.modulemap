@@ -1,0 +1,4 @@
+module CTimeKit {
+  header "include/libctimekit.h"
+  export *
+}
