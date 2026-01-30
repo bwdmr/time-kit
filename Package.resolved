@@ -1,13 +1,13 @@
 {
-  "originHash" : "dd88bb585248f815303872be4ecb2573135fa6f7f3b9e499caca94fd2dc123c1",
+  "originHash" : "02e5716cf12d6c58a19eef1f0190f0dbb46a21ebb32fb90622c537300147bba6",
   "pins" : [
     {
       "identity" : "error-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bwdmr/error-kit.git",
       "state" : {
-        "revision" : "d0216ae8e4f46a2e77565113526c8a0349e2806b",
-        "version" : "0.1.3"
+        "branch" : "feat_branch_four",
+        "revision" : "0dea58e01f2835f80b39ff5fbaa0553ccddf918c"
       }
     },
     {

@@ -418,7 +418,7 @@ extension TimeKitContainer {
 }
 
 ///
-public struct TimeKitErrorSource: Source {
+public struct TimeKitErrorSource: ErrorKitSource {
   public enum Base: String, Codable, Sendable {
     case drift
   }

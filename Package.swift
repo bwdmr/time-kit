@@ -12,7 +12,7 @@ let package = Package(
     .default(enabledTraits: ["DistributedTracingSupport"] )
   ],
   dependencies: [
-    .package(url: "https://github.com/bwdmr/error-kit.git", from: "0.1.3"),
+    .package(url: "https://github.com/bwdmr/error-kit.git", branch: "feat_branch_four"),
     .package(url: "https://github.com/apple/swift-distributed-tracing", from: "1.3.1"),
     .package(url: "https://github.com/apple/swift-service-context", from: "1.2.1")
   ],
